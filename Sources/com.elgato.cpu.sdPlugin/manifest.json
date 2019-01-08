@@ -1,0 +1,36 @@
+{
+  "Actions": [
+    {
+      "Icon": "icon", 
+      "Name": "CPU", 
+      "States": [
+        {
+          "Image": "defaultImage",
+          "TitleAlignment": "middle", 
+          "FontSize": "17"
+        }
+      ], 
+      "SupportedInMultiActions": false,
+      "Tooltip": "This action displays the CPU usage", 
+      "UUID": "com.elgato.cpu.cpu"
+    }
+  ], 
+  "Author": "Elgato", 
+  "CodePathWin": "cpu.exe", 
+  "CodePathMac": "cpu", 
+  "Description": "Displays the current CPU usage.", 
+  "Name": "CPU", 
+  "Icon": "pluginIcon", 
+  "URL": "https://www.elgato.com/gaming/stream-deck", 
+  "Version": "1.2",
+  "OS": [
+    {
+        "Platform": "mac", 
+        "MinimumVersion" : "10.11"
+    },
+    {
+        "Platform": "windows", 
+        "MinimumVersion" : "10"
+    }
+  ]
+}
