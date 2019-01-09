@@ -6,11 +6,15 @@
 
 `CPU` is a plugin that displays the CPU usage on a key.
 
-Features:
+
+# Features
 
 - code written in C++
 - cross-platform (macOS, Windows)
 - localized
+
+
+![](screenshot.png)
 
 
 # Installation
