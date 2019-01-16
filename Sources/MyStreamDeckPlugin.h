@@ -31,6 +31,8 @@ public:
 	
 	void DeviceDidConnect(const std::string& inDeviceID, const json &inDeviceInfo) override;
 	void DeviceDidDisconnect(const std::string& inDeviceID) override;
+	
+	void SendToPlugin(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID) override;
 
 private:
 	

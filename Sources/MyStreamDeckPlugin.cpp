@@ -147,3 +147,8 @@ void MyStreamDeckPlugin::DeviceDidDisconnect(const std::string& inDeviceID)
 {
 	// Nothing to do
 }
+
+void MyStreamDeckPlugin::SendToPlugin(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)
+{
+	// Nothing to do
+}
