@@ -15,6 +15,7 @@
       "UUID": "com.elgato.cpu.cpu"
     }
   ], 
+  "SDKVersion": 2,
   "Author": "Elgato", 
   "CodePathWin": "cpu.exe", 
   "CodePathMac": "cpu", 
@@ -32,5 +33,9 @@
         "Platform": "windows", 
         "MinimumVersion" : "10"
     }
-  ]
+  ],
+  "Software": 
+    {
+        "MinimumVersion" : "4.1"
+    }
 }

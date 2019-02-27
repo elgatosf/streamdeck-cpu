@@ -273,3 +273,42 @@ void ESDConnectionManager::SendToPropertyInspector(const std::string & inAction,
 	mWebsocket.send(mConnectionHandle, jsonObject.dump(), websocketpp::frame::opcode::text, ec);
 }
 
+void ESDConnectionManager::SwitchToProfile(const std::string& inDeviceID, const std::string& inProfileName)
+{
+	if(!inDeviceID.empty())
+	{
+		json jsonObject;
+
+		jsonObject[kESDSDKCommonEvent] = kESDSDKEventSwitchToProfile;
+		jsonObject[kESDSDKCommonContext] = mPluginUUID;
+		jsonObject[kESDSDKCommonDevice] = inDeviceID;
+		
+		if(!inProfileName.empty())
+		{
+			json payload;
+			payload[kESDSDKPayloadProfile] = inProfileName;
+			jsonObject[kESDSDKCommonPayload] = payload;
+		}
+
+		websocketpp::lib::error_code ec;
+		mWebsocket.send(mConnectionHandle, jsonObject.dump(), websocketpp::frame::opcode::text, ec);
+	}
+}
+
+void ESDConnectionManager::LogMessage(const std::string& inMessage)
+{
+	if(!inMessage.empty())
+	{
+		json jsonObject;
+
+		jsonObject[kESDSDKCommonEvent] = kESDSDKEventLogMessage;
+		
+		json payload;
+		payload[kESDSDKPayloadMessage] = inMessage;
+		jsonObject[kESDSDKCommonPayload] = payload;
+
+		websocketpp::lib::error_code ec;
+		mWebsocket.send(mConnectionHandle, jsonObject.dump(), websocketpp::frame::opcode::text, ec);
+	}
+}
+
