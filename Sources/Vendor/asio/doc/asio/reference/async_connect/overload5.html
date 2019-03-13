@@ -21,15 +21,15 @@
         (5 of 6 overloads)</a>
 </h4></div></div></div>
 <p>
-          (Deprecated.) Asynchronously establishes a socket connection by trying
-          each endpoint in a sequence.
+          (Deprecated: Use range overload.) Asynchronously establishes a socket connection
+          by trying each endpoint in a sequence.
         </p>
 <pre class="programlisting">template&lt;
     typename <a class="link" href="../Protocol.html" title="Protocol requirements">Protocol</a>,
     typename Iterator,
     typename <a class="link" href="../ConnectCondition.html" title="Connect condition requirements">ConnectCondition</a>,
     typename <a class="link" href="../IteratorConnectHandler.html" title="Iterator connect handler requirements">IteratorConnectHandler</a>&gt;
-<a class="link" href="../asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> async_connect(
+<a class="link" href="../asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> async_connect(
     basic_socket&lt; Protocol &gt; &amp; s,
     Iterator begin,
     ConnectCondition connect_condition,

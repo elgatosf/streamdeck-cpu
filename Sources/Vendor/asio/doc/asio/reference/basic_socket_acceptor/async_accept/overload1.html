@@ -26,7 +26,7 @@
 <pre class="programlisting">template&lt;
     typename <a class="link" href="../../Protocol.html" title="Protocol requirements">Protocol1</a>,
     typename <a class="link" href="../../AcceptHandler.html" title="Accept handler requirements">AcceptHandler</a>&gt;
-<a class="link" href="../../asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> async_accept(
+<a class="link" href="../../asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> async_accept(
     basic_socket&lt; Protocol1 &gt; &amp; peer,
     AcceptHandler &amp;&amp; handler,
     typename enable_if&lt; is_convertible&lt; Protocol, Protocol1 &gt;::value &gt;::type *  = 0);

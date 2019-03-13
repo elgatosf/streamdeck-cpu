@@ -21,9 +21,13 @@
 </h3></div></div></div>
 <p>
         <a class="indexterm" name="asio.indexterm.read_until"></a> 
-Read data into a dynamic buffer sequence,
-        or into a streambuf, until it contains a delimiter, matches a regular expression,
+The <code class="computeroutput">read_until</code> function is
+        a composed operation that reads data into a dynamic buffer sequence, or into
+        a streambuf, until it contains a delimiter, matches a regular expression,
         or a function object indicates a match.
+      </p>
+<p>
+        Read data into a dynamic buffer sequence until it contains a specified delimiter.
       </p>
 <pre class="programlisting">template&lt;
     typename <a class="link" href="SyncReadStream.html" title="Buffer-oriented synchronous read stream requirements">SyncReadStream</a>,
@@ -62,8 +66,12 @@ std::size_t <a class="link" href="read_until/overload4.html" title="read_until (
     string_view delim,
     asio::error_code &amp; ec);
   <span class="emphasis"><em>&#187; <a class="link" href="read_until/overload4.html" title="read_until (4 of 16 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Read data into a dynamic buffer sequence until some part of the data it contains
+        matches a regular expression.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="SyncReadStream.html" title="Buffer-oriented synchronous read stream requirements">SyncReadStream</a>,
     typename <a class="link" href="DynamicBuffer.html" title="Dynamic buffer requirements">DynamicBuffer</a>&gt;
 std::size_t <a class="link" href="read_until/overload5.html" title="read_until (5 of 16 overloads)">read_until</a>(
@@ -81,8 +89,12 @@ std::size_t <a class="link" href="read_until/overload6.html" title="read_until (
     const boost::regex &amp; expr,
     asio::error_code &amp; ec);
   <span class="emphasis"><em>&#187; <a class="link" href="read_until/overload6.html" title="read_until (6 of 16 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Read data into a dynamic buffer sequence until a function object indicates
+        a match.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="SyncReadStream.html" title="Buffer-oriented synchronous read stream requirements">SyncReadStream</a>,
     typename <a class="link" href="DynamicBuffer.html" title="Dynamic buffer requirements">DynamicBuffer</a>,
     typename MatchCondition&gt;
@@ -104,8 +116,11 @@ std::size_t <a class="link" href="read_until/overload8.html" title="read_until (
     asio::error_code &amp; ec,
     typename enable_if&lt; is_match_condition&lt; MatchCondition &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="read_until/overload8.html" title="read_until (8 of 16 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Read data into a streambuf until it contains a specified delimiter.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="SyncReadStream.html" title="Buffer-oriented synchronous read stream requirements">SyncReadStream</a>,
     typename Allocator&gt;
 std::size_t <a class="link" href="read_until/overload9.html" title="read_until (9 of 16 overloads)">read_until</a>(
@@ -142,8 +157,12 @@ std::size_t <a class="link" href="read_until/overload12.html" title="read_until 
     string_view delim,
     asio::error_code &amp; ec);
   <span class="emphasis"><em>&#187; <a class="link" href="read_until/overload12.html" title="read_until (12 of 16 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Read data into a streambuf until some part of the data it contains matches
+        a regular expression.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="SyncReadStream.html" title="Buffer-oriented synchronous read stream requirements">SyncReadStream</a>,
     typename Allocator&gt;
 std::size_t <a class="link" href="read_until/overload13.html" title="read_until (13 of 16 overloads)">read_until</a>(
@@ -161,8 +180,11 @@ std::size_t <a class="link" href="read_until/overload14.html" title="read_until 
     const boost::regex &amp; expr,
     asio::error_code &amp; ec);
   <span class="emphasis"><em>&#187; <a class="link" href="read_until/overload14.html" title="read_until (14 of 16 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Read data into a streambuf until a function object indicates a match.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="SyncReadStream.html" title="Buffer-oriented synchronous read stream requirements">SyncReadStream</a>,
     typename Allocator,
     typename MatchCondition&gt;

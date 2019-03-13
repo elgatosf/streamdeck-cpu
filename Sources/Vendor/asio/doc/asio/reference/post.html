@@ -26,14 +26,14 @@ Submits a completion token or function object for
       </p>
 <pre class="programlisting">template&lt;
     typename CompletionToken&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="post/overload1.html" title="post (1 of 3 overloads)">post</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="post/overload1.html" title="post (1 of 3 overloads)">post</a>(
     CompletionToken &amp;&amp; token);
   <span class="emphasis"><em>&#187; <a class="link" href="post/overload1.html" title="post (1 of 3 overloads)">more...</a></em></span>
 
 template&lt;
     typename <a class="link" href="Executor1.html" title="Executor requirements">Executor</a>,
     typename CompletionToken&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="post/overload2.html" title="post (2 of 3 overloads)">post</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="post/overload2.html" title="post (2 of 3 overloads)">post</a>(
     const Executor &amp; ex,
     CompletionToken &amp;&amp; token,
     typename enable_if&lt; is_executor&lt; Executor &gt;::value &gt;::type *  = 0);
@@ -42,7 +42,7 @@ template&lt;
 template&lt;
     typename ExecutionContext,
     typename CompletionToken&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="post/overload3.html" title="post (3 of 3 overloads)">post</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="post/overload3.html" title="post (3 of 3 overloads)">post</a>(
     ExecutionContext &amp; ctx,
     CompletionToken &amp;&amp; token,
     typename enable_if&lt; is_convertible&lt; ExecutionContext &amp;, execution_context &amp; &gt;::value &gt;::type *  = 0);

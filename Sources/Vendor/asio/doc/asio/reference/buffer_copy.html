@@ -25,6 +25,9 @@ The <code class="computeroutput">asio::buffer_copy</code> function
         is used to copy bytes from a source buffer (or buffer sequence) to a target
         buffer (or buffer sequence).
       </p>
+<p>
+        Copies bytes from a source buffer sequence to a target buffer sequence.
+      </p>
 <pre class="programlisting">template&lt;
     typename <a class="link" href="MutableBufferSequence.html" title="Mutable buffer sequence requirements">MutableBufferSequence</a>,
     typename <a class="link" href="ConstBufferSequence.html" title="Constant buffer sequence requirements">ConstBufferSequence</a>&gt;
@@ -32,8 +35,12 @@ std::size_t <a class="link" href="buffer_copy/overload1.html" title="buffer_copy
     const MutableBufferSequence &amp; target,
     const ConstBufferSequence &amp; source);
   <span class="emphasis"><em>&#187; <a class="link" href="buffer_copy/overload1.html" title="buffer_copy (1 of 2 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Copies a limited number of bytes from a source buffer sequence to a target
+        buffer sequence.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="MutableBufferSequence.html" title="Mutable buffer sequence requirements">MutableBufferSequence</a>,
     typename <a class="link" href="ConstBufferSequence.html" title="Constant buffer sequence requirements">ConstBufferSequence</a>&gt;
 std::size_t <a class="link" href="buffer_copy/overload2.html" title="buffer_copy (2 of 2 overloads)">buffer_copy</a>(

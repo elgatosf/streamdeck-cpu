@@ -21,73 +21,92 @@
 </h3></div></div></div>
 <p>
         <a class="indexterm" name="asio.indexterm.async_write"></a> 
-Start an asynchronous operation to write
-        a certain amount of data to a stream.
+The <code class="computeroutput">async_write</code> function
+        is a composed asynchronous operation that writes a certain amount of data
+        to a stream before completion.
+      </p>
+<p>
+        Start an asynchronous operation to write all of the supplied data to a stream.
       </p>
 <pre class="programlisting">template&lt;
     typename <a class="link" href="AsyncWriteStream.html" title="Buffer-oriented asynchronous write stream requirements">AsyncWriteStream</a>,
     typename <a class="link" href="ConstBufferSequence.html" title="Constant buffer sequence requirements">ConstBufferSequence</a>,
     typename <a class="link" href="WriteHandler.html" title="Write handler requirements">WriteHandler</a>&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_write/overload1.html" title="async_write (1 of 6 overloads)">async_write</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_write/overload1.html" title="async_write (1 of 6 overloads)">async_write</a>(
     AsyncWriteStream &amp; s,
     const ConstBufferSequence &amp; buffers,
     WriteHandler &amp;&amp; handler,
     typename enable_if&lt; is_const_buffer_sequence&lt; ConstBufferSequence &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="async_write/overload1.html" title="async_write (1 of 6 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Start an asynchronous operation to write a certain amount of data to a stream.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="AsyncWriteStream.html" title="Buffer-oriented asynchronous write stream requirements">AsyncWriteStream</a>,
     typename <a class="link" href="ConstBufferSequence.html" title="Constant buffer sequence requirements">ConstBufferSequence</a>,
     typename <a class="link" href="CompletionCondition.html" title="Completion condition requirements">CompletionCondition</a>,
     typename <a class="link" href="WriteHandler.html" title="Write handler requirements">WriteHandler</a>&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_write/overload2.html" title="async_write (2 of 6 overloads)">async_write</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_write/overload2.html" title="async_write (2 of 6 overloads)">async_write</a>(
     AsyncWriteStream &amp; s,
     const ConstBufferSequence &amp; buffers,
     CompletionCondition completion_condition,
     WriteHandler &amp;&amp; handler,
     typename enable_if&lt; is_const_buffer_sequence&lt; ConstBufferSequence &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="async_write/overload2.html" title="async_write (2 of 6 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Start an asynchronous operation to write all of the supplied data to a stream.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="AsyncWriteStream.html" title="Buffer-oriented asynchronous write stream requirements">AsyncWriteStream</a>,
     typename <a class="link" href="DynamicBuffer.html" title="Dynamic buffer requirements">DynamicBuffer</a>,
     typename <a class="link" href="WriteHandler.html" title="Write handler requirements">WriteHandler</a>&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_write/overload3.html" title="async_write (3 of 6 overloads)">async_write</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_write/overload3.html" title="async_write (3 of 6 overloads)">async_write</a>(
     AsyncWriteStream &amp; s,
     DynamicBuffer &amp;&amp; buffers,
     WriteHandler &amp;&amp; handler,
     typename enable_if&lt; is_dynamic_buffer&lt; typename decay&lt; DynamicBuffer &gt;::type &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="async_write/overload3.html" title="async_write (3 of 6 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Start an asynchronous operation to write a certain amount of data to a stream.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="AsyncWriteStream.html" title="Buffer-oriented asynchronous write stream requirements">AsyncWriteStream</a>,
     typename <a class="link" href="DynamicBuffer.html" title="Dynamic buffer requirements">DynamicBuffer</a>,
     typename <a class="link" href="CompletionCondition.html" title="Completion condition requirements">CompletionCondition</a>,
     typename <a class="link" href="WriteHandler.html" title="Write handler requirements">WriteHandler</a>&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_write/overload4.html" title="async_write (4 of 6 overloads)">async_write</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_write/overload4.html" title="async_write (4 of 6 overloads)">async_write</a>(
     AsyncWriteStream &amp; s,
     DynamicBuffer &amp;&amp; buffers,
     CompletionCondition completion_condition,
     WriteHandler &amp;&amp; handler,
     typename enable_if&lt; is_dynamic_buffer&lt; typename decay&lt; DynamicBuffer &gt;::type &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="async_write/overload4.html" title="async_write (4 of 6 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Start an asynchronous operation to write all of the supplied data to a stream.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="AsyncWriteStream.html" title="Buffer-oriented asynchronous write stream requirements">AsyncWriteStream</a>,
     typename Allocator,
     typename <a class="link" href="WriteHandler.html" title="Write handler requirements">WriteHandler</a>&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_write/overload5.html" title="async_write (5 of 6 overloads)">async_write</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_write/overload5.html" title="async_write (5 of 6 overloads)">async_write</a>(
     AsyncWriteStream &amp; s,
     basic_streambuf&lt; Allocator &gt; &amp; b,
     WriteHandler &amp;&amp; handler);
   <span class="emphasis"><em>&#187; <a class="link" href="async_write/overload5.html" title="async_write (5 of 6 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Start an asynchronous operation to write a certain amount of data to a stream.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="AsyncWriteStream.html" title="Buffer-oriented asynchronous write stream requirements">AsyncWriteStream</a>,
     typename Allocator,
     typename <a class="link" href="CompletionCondition.html" title="Completion condition requirements">CompletionCondition</a>,
     typename <a class="link" href="WriteHandler.html" title="Write handler requirements">WriteHandler</a>&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_write/overload6.html" title="async_write (6 of 6 overloads)">async_write</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_write/overload6.html" title="async_write (6 of 6 overloads)">async_write</a>(
     AsyncWriteStream &amp; s,
     basic_streambuf&lt; Allocator &gt; &amp; b,
     CompletionCondition completion_condition,

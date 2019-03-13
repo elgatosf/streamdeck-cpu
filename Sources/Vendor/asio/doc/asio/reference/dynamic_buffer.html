@@ -25,6 +25,9 @@ The <code class="computeroutput">asio::dynamic_buffer</code>
         function is used to create a dynamically resized buffer from a <code class="computeroutput">std::basic_string</code>
         or <code class="computeroutput">std::vector</code>.
       </p>
+<p>
+        Create a new dynamic buffer that represents the given string.
+      </p>
 <pre class="programlisting">template&lt;
     typename Elem,
     typename Traits,
@@ -41,8 +44,11 @@ dynamic_string_buffer&lt; Elem, Traits, Allocator &gt; <a class="link" href="dyn
     std::basic_string&lt; Elem, Traits, Allocator &gt; &amp; data,
     std::size_t max_size);
   <span class="emphasis"><em>&#187; <a class="link" href="dynamic_buffer/overload2.html" title="dynamic_buffer (2 of 4 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Create a new dynamic buffer that represents the given vector.
+      </p>
+<pre class="programlisting">template&lt;
     typename Elem,
     typename Allocator&gt;
 dynamic_vector_buffer&lt; Elem, Allocator &gt; <a class="link" href="dynamic_buffer/overload3.html" title="dynamic_buffer (3 of 4 overloads)">dynamic_buffer</a>(

@@ -23,6 +23,9 @@
         <a class="indexterm" name="asio.indexterm.spawn"></a> 
 Start a new stackful coroutine.
       </p>
+<p>
+        Start a new stackful coroutine, calling the specified handler when it completes.
+      </p>
 <pre class="programlisting">template&lt;
     typename Function&gt;
 void <a class="link" href="spawn/overload1.html" title="spawn (1 of 7 overloads)">spawn</a>(
@@ -39,8 +42,11 @@ void <a class="link" href="spawn/overload2.html" title="spawn (2 of 7 overloads)
     const boost::coroutines::attributes &amp; attributes = boost::coroutines::attributes(),
     typename enable_if&lt;!is_executor&lt; typename decay&lt; Handler &gt;::type &gt;::value &amp;&amp;!is_convertible&lt; Handler &amp;, execution_context &amp; &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="spawn/overload2.html" title="spawn (2 of 7 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Start a new stackful coroutine, inheriting the execution context of another.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="Handler.html" title="Handlers">Handler</a>,
     typename Function&gt;
 void <a class="link" href="spawn/overload3.html" title="spawn (3 of 7 overloads)">spawn</a>(
@@ -48,8 +54,11 @@ void <a class="link" href="spawn/overload3.html" title="spawn (3 of 7 overloads)
     Function &amp;&amp; function,
     const boost::coroutines::attributes &amp; attributes = boost::coroutines::attributes());
   <span class="emphasis"><em>&#187; <a class="link" href="spawn/overload3.html" title="spawn (3 of 7 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Start a new stackful coroutine that executes on a given executor.
+      </p>
+<pre class="programlisting">template&lt;
     typename Function,
     typename <a class="link" href="Executor1.html" title="Executor requirements">Executor</a>&gt;
 void <a class="link" href="spawn/overload4.html" title="spawn (4 of 7 overloads)">spawn</a>(
@@ -58,8 +67,11 @@ void <a class="link" href="spawn/overload4.html" title="spawn (4 of 7 overloads)
     const boost::coroutines::attributes &amp; attributes = boost::coroutines::attributes(),
     typename enable_if&lt; is_executor&lt; Executor &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="spawn/overload4.html" title="spawn (4 of 7 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Start a new stackful coroutine that executes on a given strand.
+      </p>
+<pre class="programlisting">template&lt;
     typename Function,
     typename <a class="link" href="Executor1.html" title="Executor requirements">Executor</a>&gt;
 void <a class="link" href="spawn/overload5.html" title="spawn (5 of 7 overloads)">spawn</a>(
@@ -67,16 +79,22 @@ void <a class="link" href="spawn/overload5.html" title="spawn (5 of 7 overloads)
     Function &amp;&amp; function,
     const boost::coroutines::attributes &amp; attributes = boost::coroutines::attributes());
   <span class="emphasis"><em>&#187; <a class="link" href="spawn/overload5.html" title="spawn (5 of 7 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Start a new stackful coroutine that executes in the context of a strand.
+      </p>
+<pre class="programlisting">template&lt;
     typename Function&gt;
 void <a class="link" href="spawn/overload6.html" title="spawn (6 of 7 overloads)">spawn</a>(
     const asio::io_context::strand &amp; s,
     Function &amp;&amp; function,
     const boost::coroutines::attributes &amp; attributes = boost::coroutines::attributes());
   <span class="emphasis"><em>&#187; <a class="link" href="spawn/overload6.html" title="spawn (6 of 7 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Start a new stackful coroutine that executes on a given execution context.
+      </p>
+<pre class="programlisting">template&lt;
     typename Function,
     typename ExecutionContext&gt;
 void <a class="link" href="spawn/overload7.html" title="spawn (7 of 7 overloads)">spawn</a>(

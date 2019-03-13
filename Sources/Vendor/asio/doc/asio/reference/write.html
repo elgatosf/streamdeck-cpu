@@ -21,8 +21,11 @@
 </h3></div></div></div>
 <p>
         <a class="indexterm" name="asio.indexterm.write"></a> 
-Write a certain amount of data to a stream before
-        returning.
+The <code class="computeroutput">write</code> function is a composed operation
+        that writes a certain amount of data to a stream before returning.
+      </p>
+<p>
+        Write all of the supplied data to a stream before returning.
       </p>
 <pre class="programlisting">template&lt;
     typename <a class="link" href="SyncWriteStream.html" title="Buffer-oriented synchronous write stream requirements">SyncWriteStream</a>,
@@ -42,8 +45,11 @@ std::size_t <a class="link" href="write/overload2.html" title="write (2 of 12 ov
     asio::error_code &amp; ec,
     typename enable_if&lt; is_const_buffer_sequence&lt; ConstBufferSequence &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="write/overload2.html" title="write (2 of 12 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Write a certain amount of data to a stream before returning.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="SyncWriteStream.html" title="Buffer-oriented synchronous write stream requirements">SyncWriteStream</a>,
     typename <a class="link" href="ConstBufferSequence.html" title="Constant buffer sequence requirements">ConstBufferSequence</a>,
     typename <a class="link" href="CompletionCondition.html" title="Completion condition requirements">CompletionCondition</a>&gt;
@@ -65,8 +71,11 @@ std::size_t <a class="link" href="write/overload4.html" title="write (4 of 12 ov
     asio::error_code &amp; ec,
     typename enable_if&lt; is_const_buffer_sequence&lt; ConstBufferSequence &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="write/overload4.html" title="write (4 of 12 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Write all of the supplied data to a stream before returning.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="SyncWriteStream.html" title="Buffer-oriented synchronous write stream requirements">SyncWriteStream</a>,
     typename <a class="link" href="DynamicBuffer.html" title="Dynamic buffer requirements">DynamicBuffer</a>&gt;
 std::size_t <a class="link" href="write/overload5.html" title="write (5 of 12 overloads)">write</a>(
@@ -84,8 +93,11 @@ std::size_t <a class="link" href="write/overload6.html" title="write (6 of 12 ov
     asio::error_code &amp; ec,
     typename enable_if&lt; is_dynamic_buffer&lt; typename decay&lt; DynamicBuffer &gt;::type &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="write/overload6.html" title="write (6 of 12 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Write a certain amount of data to a stream before returning.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="SyncWriteStream.html" title="Buffer-oriented synchronous write stream requirements">SyncWriteStream</a>,
     typename <a class="link" href="DynamicBuffer.html" title="Dynamic buffer requirements">DynamicBuffer</a>,
     typename <a class="link" href="CompletionCondition.html" title="Completion condition requirements">CompletionCondition</a>&gt;
@@ -107,8 +119,11 @@ std::size_t <a class="link" href="write/overload8.html" title="write (8 of 12 ov
     asio::error_code &amp; ec,
     typename enable_if&lt; is_dynamic_buffer&lt; typename decay&lt; DynamicBuffer &gt;::type &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="write/overload8.html" title="write (8 of 12 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Write all of the supplied data to a stream before returning.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="SyncWriteStream.html" title="Buffer-oriented synchronous write stream requirements">SyncWriteStream</a>,
     typename Allocator&gt;
 std::size_t <a class="link" href="write/overload9.html" title="write (9 of 12 overloads)">write</a>(
@@ -124,8 +139,11 @@ std::size_t <a class="link" href="write/overload10.html" title="write (10 of 12 
     basic_streambuf&lt; Allocator &gt; &amp; b,
     asio::error_code &amp; ec);
   <span class="emphasis"><em>&#187; <a class="link" href="write/overload10.html" title="write (10 of 12 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Write a certain amount of data to a stream before returning.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="SyncWriteStream.html" title="Buffer-oriented synchronous write stream requirements">SyncWriteStream</a>,
     typename Allocator,
     typename <a class="link" href="CompletionCondition.html" title="Completion condition requirements">CompletionCondition</a>&gt;

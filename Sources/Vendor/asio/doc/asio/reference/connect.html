@@ -21,8 +21,12 @@
 </h3></div></div></div>
 <p>
         <a class="indexterm" name="asio.indexterm.connect"></a> 
-Establishes a socket connection by trying each
-        endpoint in a sequence.
+The <code class="computeroutput">connect</code> function is a composed
+        operation that establishes a socket connection by trying each endpoint in
+        a sequence.
+      </p>
+<p>
+        Establishes a socket connection by trying each endpoint in a sequence.
       </p>
 <pre class="programlisting">template&lt;
     typename <a class="link" href="Protocol.html" title="Protocol requirements">Protocol</a>,
@@ -42,8 +46,12 @@ Protocol::endpoint <a class="link" href="connect/overload2.html" title="connect 
     asio::error_code &amp; ec,
     typename enable_if&lt; is_endpoint_sequence&lt; EndpointSequence &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="connect/overload2.html" title="connect (2 of 12 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        (Deprecated: Use range overload.) Establishes a socket connection by trying
+        each endpoint in a sequence.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="Protocol.html" title="Protocol requirements">Protocol</a>,
     typename Iterator&gt;
 Iterator <a class="link" href="connect/overload3.html" title="connect (3 of 12 overloads)">connect</a>(
@@ -61,8 +69,11 @@ Iterator <a class="link" href="connect/overload4.html" title="connect (4 of 12 o
     asio::error_code &amp; ec,
     typename enable_if&lt;!is_endpoint_sequence&lt; Iterator &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="connect/overload4.html" title="connect (4 of 12 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Establishes a socket connection by trying each endpoint in a sequence.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="Protocol.html" title="Protocol requirements">Protocol</a>,
     typename Iterator&gt;
 Iterator <a class="link" href="connect/overload5.html" title="connect (5 of 12 overloads)">connect</a>(
@@ -103,8 +114,12 @@ Protocol::endpoint <a class="link" href="connect/overload8.html" title="connect 
     asio::error_code &amp; ec,
     typename enable_if&lt; is_endpoint_sequence&lt; EndpointSequence &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="connect/overload8.html" title="connect (8 of 12 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        (Deprecated: Use range overload.) Establishes a socket connection by trying
+        each endpoint in a sequence.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="Protocol.html" title="Protocol requirements">Protocol</a>,
     typename Iterator,
     typename <a class="link" href="ConnectCondition.html" title="Connect condition requirements">ConnectCondition</a>&gt;
@@ -126,8 +141,11 @@ Iterator <a class="link" href="connect/overload10.html" title="connect (10 of 12
     asio::error_code &amp; ec,
     typename enable_if&lt;!is_endpoint_sequence&lt; Iterator &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="connect/overload10.html" title="connect (10 of 12 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Establishes a socket connection by trying each endpoint in a sequence.
+      </p>
+<pre class="programlisting">template&lt;
     typename <a class="link" href="Protocol.html" title="Protocol requirements">Protocol</a>,
     typename Iterator,
     typename <a class="link" href="ConnectCondition.html" title="Connect condition requirements">ConnectCondition</a>&gt;

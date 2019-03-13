@@ -27,7 +27,7 @@ Start
 <pre class="programlisting">template&lt;
     typename <a class="link" href="../ConstBufferSequence.html" title="Constant buffer sequence requirements">ConstBufferSequence</a>,
     typename <a class="link" href="../WriteHandler.html" title="Write handler requirements">WriteHandler</a>&gt;
-<a class="link" href="../asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> async_write_some(
+<a class="link" href="../asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> async_write_some(
     const ConstBufferSequence &amp; buffers,
     WriteHandler &amp;&amp; handler);
 </pre>
@@ -73,7 +73,7 @@ Start
 <p>
           The async_write_some operation may not transmit all of the data to the
           peer. Consider using the <a class="link" href="../async_write.html" title="async_write"><code class="computeroutput">async_write</code></a>
-          function if you need to ensure that all data is written before the blocking
+          function if you need to ensure that all data is written before the asynchronous
           operation completes.
         </p>
 </div>

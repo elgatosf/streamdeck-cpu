@@ -32,8 +32,11 @@ executor_binder&lt; typename decay&lt; T &gt;::type, Executor &gt; <a class="lin
     T &amp;&amp; t,
     typename enable_if&lt; is_executor&lt; Executor &gt;::value &gt;::type *  = 0);
   <span class="emphasis"><em>&#187; <a class="link" href="bind_executor/overload1.html" title="bind_executor (1 of 2 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Associate an object of type <code class="computeroutput">T</code> with an execution context's executor.
+      </p>
+<pre class="programlisting">template&lt;
     typename ExecutionContext,
     typename T&gt;
 executor_binder&lt; typename decay&lt; T &gt;::type, typename ExecutionContext::executor_type &gt; <a class="link" href="bind_executor/overload2.html" title="bind_executor (2 of 2 overloads)">bind_executor</a>(

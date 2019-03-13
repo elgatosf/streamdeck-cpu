@@ -24,14 +24,20 @@
 Default invoke function
         for handlers.
       </p>
+<p>
+        Default handler invocation hook used for non-const function objects.
+      </p>
 <pre class="programlisting">template&lt;
     typename Function&gt;
 void <a class="link" href="asio_handler_invoke/overload1.html" title="asio_handler_invoke (1 of 2 overloads)">asio_handler_invoke</a>(
     Function &amp; function,
     ... );
   <span class="emphasis"><em>&#187; <a class="link" href="asio_handler_invoke/overload1.html" title="asio_handler_invoke (1 of 2 overloads)">more...</a></em></span>
-
-template&lt;
+</pre>
+<p>
+        Default handler invocation hook used for const function objects.
+      </p>
+<pre class="programlisting">template&lt;
     typename Function&gt;
 void <a class="link" href="asio_handler_invoke/overload2.html" title="asio_handler_invoke (2 of 2 overloads)">asio_handler_invoke</a>(
     const Function &amp; function,

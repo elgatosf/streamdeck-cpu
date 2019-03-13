@@ -21,14 +21,18 @@
 </h3></div></div></div>
 <p>
         <a class="indexterm" name="asio.indexterm.async_read"></a> 
-Start an asynchronous operation to read
-        a certain amount of data from a stream.
+The <code class="computeroutput">async_read</code> function is
+        a composed asynchronous operation that reads a certain amount of data from
+        a stream before completion.
+      </p>
+<p>
+        Start an asynchronous operation to read a certain amount of data from a stream.
       </p>
 <pre class="programlisting">template&lt;
     typename <a class="link" href="AsyncReadStream.html" title="Buffer-oriented asynchronous read stream requirements">AsyncReadStream</a>,
     typename <a class="link" href="MutableBufferSequence.html" title="Mutable buffer sequence requirements">MutableBufferSequence</a>,
     typename <a class="link" href="ReadHandler.html" title="Read handler requirements">ReadHandler</a>&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_read/overload1.html" title="async_read (1 of 6 overloads)">async_read</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_read/overload1.html" title="async_read (1 of 6 overloads)">async_read</a>(
     AsyncReadStream &amp; s,
     const MutableBufferSequence &amp; buffers,
     ReadHandler &amp;&amp; handler,
@@ -40,7 +44,7 @@ template&lt;
     typename <a class="link" href="MutableBufferSequence.html" title="Mutable buffer sequence requirements">MutableBufferSequence</a>,
     typename <a class="link" href="CompletionCondition.html" title="Completion condition requirements">CompletionCondition</a>,
     typename <a class="link" href="ReadHandler.html" title="Read handler requirements">ReadHandler</a>&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_read/overload2.html" title="async_read (2 of 6 overloads)">async_read</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_read/overload2.html" title="async_read (2 of 6 overloads)">async_read</a>(
     AsyncReadStream &amp; s,
     const MutableBufferSequence &amp; buffers,
     CompletionCondition completion_condition,
@@ -52,7 +56,7 @@ template&lt;
     typename <a class="link" href="AsyncReadStream.html" title="Buffer-oriented asynchronous read stream requirements">AsyncReadStream</a>,
     typename <a class="link" href="DynamicBuffer.html" title="Dynamic buffer requirements">DynamicBuffer</a>,
     typename <a class="link" href="ReadHandler.html" title="Read handler requirements">ReadHandler</a>&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_read/overload3.html" title="async_read (3 of 6 overloads)">async_read</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_read/overload3.html" title="async_read (3 of 6 overloads)">async_read</a>(
     AsyncReadStream &amp; s,
     DynamicBuffer &amp;&amp; buffers,
     ReadHandler &amp;&amp; handler,
@@ -64,7 +68,7 @@ template&lt;
     typename <a class="link" href="DynamicBuffer.html" title="Dynamic buffer requirements">DynamicBuffer</a>,
     typename <a class="link" href="CompletionCondition.html" title="Completion condition requirements">CompletionCondition</a>,
     typename <a class="link" href="ReadHandler.html" title="Read handler requirements">ReadHandler</a>&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_read/overload4.html" title="async_read (4 of 6 overloads)">async_read</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_read/overload4.html" title="async_read (4 of 6 overloads)">async_read</a>(
     AsyncReadStream &amp; s,
     DynamicBuffer &amp;&amp; buffers,
     CompletionCondition completion_condition,
@@ -76,7 +80,7 @@ template&lt;
     typename <a class="link" href="AsyncReadStream.html" title="Buffer-oriented asynchronous read stream requirements">AsyncReadStream</a>,
     typename Allocator,
     typename <a class="link" href="ReadHandler.html" title="Read handler requirements">ReadHandler</a>&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_read/overload5.html" title="async_read (5 of 6 overloads)">async_read</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_read/overload5.html" title="async_read (5 of 6 overloads)">async_read</a>(
     AsyncReadStream &amp; s,
     basic_streambuf&lt; Allocator &gt; &amp; b,
     ReadHandler &amp;&amp; handler);
@@ -87,7 +91,7 @@ template&lt;
     typename Allocator,
     typename <a class="link" href="CompletionCondition.html" title="Completion condition requirements">CompletionCondition</a>,
     typename <a class="link" href="ReadHandler.html" title="Read handler requirements">ReadHandler</a>&gt;
-<a class="link" href="asynchronous_operations/automatic_deduction_of_initiating_function_return_type.html" title="Automatic deduction of initiating function return type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_read/overload6.html" title="async_read (6 of 6 overloads)">async_read</a>(
+<a class="link" href="asynchronous_operations.html#asio.reference.asynchronous_operations.automatic_deduction_of_initiating_function_return_type"><span class="emphasis"><em>DEDUCED</em></span></a> <a class="link" href="async_read/overload6.html" title="async_read (6 of 6 overloads)">async_read</a>(
     AsyncReadStream &amp; s,
     basic_streambuf&lt; Allocator &gt; &amp; b,
     CompletionCondition completion_condition,
