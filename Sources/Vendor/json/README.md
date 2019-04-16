@@ -5,6 +5,7 @@
 [![Coverage Status](https://img.shields.io/coveralls/nlohmann/json.svg)](https://coveralls.io/r/nlohmann/json)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/5550/badge.svg)](https://scan.coverity.com/projects/nlohmann-json)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f3732b3327e34358a0e9d1fe9f661f08)](https://www.codacy.com/app/nlohmann/json?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nlohmann/json&amp;utm_campaign=Badge_Grade)
+[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/nlohmann/json.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nlohmann/json/context:cpp)
 [![Try online](https://img.shields.io/badge/try-online-blue.svg)](https://wandbox.org/permlink/TarF5pPn9NtHQjhf)
 [![Documentation](https://img.shields.io/badge/docs-doxygen-blue.svg)](http://nlohmann.github.io/json)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/nlohmann/json/master/LICENSE.MIT)
@@ -15,6 +16,8 @@
 
 - [Design goals](#design-goals)
 - [Integration](#integration)
+  - [CMake](#cmake)
+  - [Package Managers](#package-managers)
 - [Examples](#examples)
   - [JSON as first-class data type](#json-as-first-class-data-type)
   - [Serialization / Deserialization](#serialization--deserialization)
@@ -24,7 +27,8 @@
   - [JSON Merge Patch](#json-merge-patch)
   - [Implicit conversions](#implicit-conversions)
   - [Conversions to/from arbitrary types](#arbitrary-types-conversions)
-  - [Binary formats (CBOR, MessagePack, and UBJSON)](#binary-formats-cbor-messagepack-and-ubjson)
+  - [Specializing enum conversion](#specializing-enum-conversion)
+  - [Binary formats (BSON, CBOR, MessagePack, and UBJSON)](#binary-formats-bson-cbor-messagepack-and-ubjson)
 - [Supported compilers](#supported-compilers)
 - [License](#license)
 - [Contact](#contact)
@@ -42,7 +46,7 @@ There are myriads of [JSON](http://json.org) libraries out there, and each may e
 
 - **Trivial integration**. Our whole code consists of a single header file [`json.hpp`](https://github.com/nlohmann/json/blob/develop/single_include/nlohmann/json.hpp). That's it. No library, no subproject, no dependencies, no complex build system. The class is written in vanilla C++11. All in all, everything should require no adjustment of your compiler flags or project settings.
 
-- **Serious testing**. Our class is heavily [unit-tested](https://github.com/nlohmann/json/tree/develop/test/src) and covers [100%](https://coveralls.io/r/nlohmann/json) of the code, including all exceptional behavior. Furthermore, we checked with [Valgrind](http://valgrind.org) and the [Clang Sanitizers](https://clang.llvm.org/docs/index.html) that there are no memory leaks. [Google OSS-Fuzz](https://github.com/google/oss-fuzz/tree/master/projects/json) additionally runs fuzz tests agains all parsers 24/7, effectively executing billions of tests so far. To maintain high quality, the project is following the [Core Infrastructure Initiative (CII) best practices](https://bestpractices.coreinfrastructure.org/projects/289).
+- **Serious testing**. Our class is heavily [unit-tested](https://github.com/nlohmann/json/tree/develop/test/src) and covers [100%](https://coveralls.io/r/nlohmann/json) of the code, including all exceptional behavior. Furthermore, we checked with [Valgrind](http://valgrind.org) and the [Clang Sanitizers](https://clang.llvm.org/docs/index.html) that there are no memory leaks. [Google OSS-Fuzz](https://github.com/google/oss-fuzz/tree/master/projects/json) additionally runs fuzz tests against all parsers 24/7, effectively executing billions of tests so far. To maintain high quality, the project is following the [Core Infrastructure Initiative (CII) best practices](https://bestpractices.coreinfrastructure.org/projects/289).
 
 Other aspects were not so important to us:
 
@@ -68,11 +72,82 @@ to the files you want to process JSON and set the necessary switches to enable C
 
 You can further use file [`include/nlohmann/json_fwd.hpp`](https://github.com/nlohmann/json/blob/develop/include/nlohmann/json_fwd.hpp) for forward-declarations. The installation of json_fwd.hpp (as part of cmake's install step), can be achieved by setting `-DJSON_MultipleHeaders=ON`.
 
+### CMake
+
+You can also use the `nlohmann_json::nlohmann_json` interface target in CMake.  This target populates the appropriate usage requirements for `INTERFACE_INCLUDE_DIRECTORIES` to point to the appropriate include directories and `INTERFACE_COMPILE_FEATURES` for the necessary C++11 flags.
+
+#### External
+
+To use this library from a CMake project, you can locate it directly with `find_package()` and use the namespaced imported target from the generated package configuration:
+
+```cmake
+# CMakeLists.txt
+find_package(nlohmann_json 3.2.0 REQUIRED)
+...
+add_library(foo ...)
+...
+target_link_libraries(foo PRIVATE nlohmann_json::nlohmann_json)
+```
+
+The package configuration file, `nlohmann_jsonConfig.cmake`, can be used either from an install tree or directly out of the build tree.
+
+#### Embedded
+
+To embed the library directly into an existing CMake project, place the entire source tree in a subdirectory and call `add_subdirectory()` in your `CMakeLists.txt` file:
+
+```cmake
+# Typically you don't care so much for a third party library's tests to be
+# run from your own project's code.
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+
+# Don't use include(nlohmann_json/CMakeLists.txt) since that carries with it
+# inintended consequences that will break the build.  It's generally
+# discouraged (although not necessarily well documented as such) to use
+# include(...) for pulling in other CMake projects anyways.
+add_subdirectory(nlohmann_json)
+...
+add_library(foo ...)
+...
+target_link_libraries(foo PRIVATE nlohmann_json::nlohmann_json)
+```
+
+#### Supporting Both
+
+To allow your project to support either an externally supplied or an embedded JSON library, you can use a pattern akin to the following:
+
+``` cmake
+# Top level CMakeLists.txt
+project(FOO)
+...
+option(FOO_USE_EXTERNAL_JSON "Use an external JSON library" OFF)
+...
+add_subdirectory(thirdparty)
+...
+add_library(foo ...)
+...
+# Note that the namespaced target will always be available regardless of the
+# import method
+target_link_libraries(foo PRIVATE nlohmann_json::nlohmann_json)
+```
+```cmake
+# thirdparty/CMakeLists.txt
+...
+if(FOO_USE_EXTERNAL_JSON)
+  find_package(nlohmann_json 3.2.0 REQUIRED)
+else()
+  set(JSON_BuildTests OFF CACHE INTERNAL "")
+  add_subdirectory(nlohmann_json)
+endif()
+...
+```
+
+`thirdparty/nlohmann_json` is then a complete copy of this source tree.
+
 ### Package Managers
 
 :beer: If you are using OS X and [Homebrew](http://brew.sh), just type `brew tap nlohmann/json` and `brew install nlohmann_json` and you're set. If you want the bleeding edge rather than the latest release, use `brew install nlohmann_json --HEAD`.
 
-If you are using the [Meson Build System](http://mesonbuild.com), then you can wrap this repository as a subproject.
+If you are using the [Meson Build System](http://mesonbuild.com), then you can get a wrap file by downloading it from [Meson WrapDB](https://wrapdb.mesonbuild.com/nlohmann_json), or simply use `meson wrap install nlohmann_json`.
 
 If you are using [Conan](https://www.conan.io/) to manage your dependencies, merely add `jsonformoderncpp/x.y.z@vthiery/stable` to your `conanfile.py`'s requires, where `x.y.z` is the release version you want to use. Please file issues [here](https://github.com/vthiery/conan-jsonformoderncpp/issues) if you experience problems with the packages.
 
@@ -222,10 +297,11 @@ Note the difference between serialization and assignment:
 // store a string in a JSON value
 json j_string = "this is a string";
 
-// retrieve the string value (implicit JSON to std::string conversion)
-std::string cpp_string = j_string;
-// retrieve the string value (explicit JSON to std::string conversion)
-auto cpp_string2 = j_string.get<std::string>();
+// retrieve the string value
+auto cpp_string = j_string.get<std::string>();
+// retrieve the string value (alternative when an variable already exists)
+std::string cpp_string2;
+j_string.get_to(cpp_string2);
 
 // retrieve the serialized value (explicit JSON serialization)
 std::string serialized_string = j_string.dump();
@@ -236,9 +312,9 @@ std::cout << cpp_string << " == " << cpp_string2 << " == " << j_string.get<std::
 std::cout << j_string << " == " << serialized_string << std::endl;
 ```
 
-[`.dump()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_a5adea76fedba9898d404fef8598aa663.html#a5adea76fedba9898d404fef8598aa663) always returns the serialized value, and [`.get<std::string>()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_a16f9445f7629f634221a42b967cdcd43.html#a16f9445f7629f634221a42b967cdcd43) returns the originally stored string value.
+[`.dump()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_a50ec80b02d0f3f51130d4abb5d1cfdc5.html#a50ec80b02d0f3f51130d4abb5d1cfdc5) always returns the serialized value, and [`.get<std::string>()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_a16f9445f7629f634221a42b967cdcd43.html#a16f9445f7629f634221a42b967cdcd43) returns the originally stored string value.
 
-Note the library only supports UTF-8. When you store strings with different encodings in the library, calling [`dump()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_a5adea76fedba9898d404fef8598aa663.html#a5adea76fedba9898d404fef8598aa663) may throw an exception.
+Note the library only supports UTF-8. When you store strings with different encodings in the library, calling [`dump()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_a50ec80b02d0f3f51130d4abb5d1cfdc5.html#a50ec80b02d0f3f51130d4abb5d1cfdc5) may throw an exception unless `json::error_handler_t::replace` or `json::error_handler_t::ignore` are used as error handlers.
 
 #### To/from streams (e.g. files, string streams)
 
@@ -330,7 +406,6 @@ To implement your own SAX handler, proceed as follows:
 
 Note the `sax_parse` function only returns a `bool` indicating the result of the last executed SAX event. It does not return a  `json` value - it is up to you to decide what to do with the SAX events. Furthermore, no exceptions are thrown in case of a parse error - it is up to you what to do with the exception object passed to your `parse_error` implementation. Internally, the SAX interface is used for the DOM parser (class `json_sax_dom_parser`) as well as the acceptor (`json_sax_acceptor`), see file [`json_sax.hpp`](https://github.com/nlohmann/json/blob/develop/include/nlohmann/detail/input/json_sax.hpp).
 
-
 ### STL-like access
 
 We designed the JSON class to behave just like an STL container. In fact, it satisfies the [**ReversibleContainer**](https://en.cppreference.com/w/cpp/named_req/ReversibleContainer) requirement.
@@ -356,7 +431,7 @@ for (auto& element : j) {
 }
 
 // getter/setter
-const std::string tmp = j[0];
+const auto tmp = j[0].get<std::string>();
 j[1] = 42;
 bool foo = j.at(2);
 
@@ -389,6 +464,16 @@ o.emplace("weather", "sunny");
 // special iterator member functions for objects
 for (json::iterator it = o.begin(); it != o.end(); ++it) {
   std::cout << it.key() << " : " << it.value() << "\n";
+}
+
+// the same code as range for
+for (auto& el : o.items()) {
+  std::cout << el.key() << " : " << el.value() << "\n";
+}
+
+// even easier with structured bindings (C++17)
+for (auto& [key, value] : o.items()) {
+  std::cout << key << " : " << value << "\n";
 }
 
 // find an entry
@@ -539,33 +624,38 @@ j_original.merge_patch(j_patch);
 
 ### Implicit conversions
 
-The type of the JSON object is determined automatically by the expression to store. Likewise, the stored value is implicitly converted.
+Supported types can be implicitly converted to JSON values.
+
+It is recommended to **NOT USE** implicit conversions **FROM** a JSON value.
+You can find more details about this recommendation [here](https://www.github.com/nlohmann/json/issues/958). 
 
 ```cpp
 // strings
 std::string s1 = "Hello, world!";
 json js = s1;
-std::string s2 = js;
+auto s2 = js.get<std::string>();
+// NOT RECOMMENDED
+std::string s3 = js;
+std::string s4;
+s4 = js;
 
 // Booleans
 bool b1 = true;
 json jb = b1;
-bool b2 = jb;
+auto b2 = jb.get<bool>();
+// NOT RECOMMENDED
+bool b3 = jb;
+bool b4;
+b4 = jb;
 
 // numbers
 int i = 42;
 json jn = i;
-double f = jn;
-
-// etc.
-```
-
-You can also explicitly ask for the value:
-
-```cpp
-std::string vs = js.get<std::string>();
-bool vb = jb.get<bool>();
-int vi = jn.get<int>();
+auto f = jn.get<double>();
+// NOT RECOMMENDED
+double f2 = jb;
+double f3;
+f3 = jb;
 
 // etc.
 ```
@@ -623,7 +713,7 @@ std::cout << j << std::endl;
 // {"address":"744 Evergreen Terrace","age":60,"name":"Ned Flanders"}
 
 // conversion: json -> person
-ns::person p2 = j;
+auto p2 = j.get<ns::person>();
 
 // that's it
 assert(p == p2);
@@ -642,25 +732,23 @@ namespace ns {
     }
 
     void from_json(const json& j, person& p) {
-        p.name = j.at("name").get<std::string>();
-        p.address = j.at("address").get<std::string>();
-        p.age = j.at("age").get<int>();
+        j.at("name").get_to(p.name);
+        j.at("address").get_to(p.address);
+        j.at("age").get_to(p.age);
     }
 } // namespace ns
 ```
 
 That's all! When calling the `json` constructor with your type, your custom `to_json` method will be automatically called.
-Likewise, when calling `get<your_type>()`, the `from_json` method will be called.
+Likewise, when calling `get<your_type>()` or `get_to(your_type&)`, the `from_json` method will be called.
 
 Some important things:
 
 * Those methods **MUST** be in your type's namespace (which can be the global namespace), or the library will not be able to locate them (in this example, they are in namespace `ns`, where `person` is defined).
-* Those methods **MUST** be available (e.g., properly headers must be included) everywhere you use the implicit conversions. Look at [issue 1108](https://github.com/nlohmann/json/issues/1108) for errors that may occur otherwise.
+* Those methods **MUST** be available (e.g., properly headers must be included) everywhere you use these conversions. Look at [issue 1108](https://github.com/nlohmann/json/issues/1108) for errors that may occur otherwise.
 * When using `get<your_type>()`, `your_type` **MUST** be [DefaultConstructible](https://en.cppreference.com/w/cpp/named_req/DefaultConstructible). (There is a way to bypass this requirement described later.)
 * In function `from_json`, use function [`at()`](https://nlohmann.github.io/json/classnlohmann_1_1basic__json_a93403e803947b86f4da2d1fb3345cf2c.html#a93403e803947b86f4da2d1fb3345cf2c) to access the object values rather than `operator[]`. In case a key does not exist, `at` throws an exception that you can handle, whereas `operator[]` exhibits undefined behavior.
-* In case your type contains several `operator=` definitions, code like `your_variable = your_json;` [may not compile](https://github.com/nlohmann/json/issues/667). You need to write `your_variable = your_json.get<decltype your_variable>();` instead.
 * You do not need to add serializers or deserializers for STL types like `std::vector`: the library already implements these.
-* Be careful with the definition order of the `from_json`/`to_json` functions: If a type `B` has a member of type `A`, you **MUST** define `to_json(A)` before `to_json(B)`. Look at [issue 561](https://github.com/nlohmann/json/issues/561) for more details.
 
 
 #### How do I convert third-party types?
@@ -804,13 +892,71 @@ struct bad_serializer
 };
 ```
 
-### Binary formats (CBOR, MessagePack, and UBJSON)
+### Specializing enum conversion
 
-Though JSON is a ubiquitous data format, it is not a very compact format suitable for data exchange, for instance over a network. Hence, the library supports [CBOR](http://cbor.io) (Concise Binary Object Representation), [MessagePack](http://msgpack.org), and [UBJSON](http://ubjson.org) (Universal Binary JSON Specification) to efficiently encode JSON values to byte vectors and to decode such vectors.
+By default, enum values are serialized to JSON as integers. In some cases this could result in undesired behavior. If an enum is modified or re-ordered after data has been serialized to JSON, the later de-serialized JSON data may be undefined or a different enum value than was originally intended.
+
+It is possible to more precisely specify how a given enum is mapped to and from JSON as shown below:
+
+```cpp
+// example enum type declaration
+enum TaskState {
+    TS_STOPPED,
+    TS_RUNNING,
+    TS_COMPLETED,
+    TS_INVALID=-1,
+};
+
+// map TaskState values to JSON as strings
+NLOHMANN_JSON_SERIALIZE_ENUM( TaskState, {
+    {TS_INVALID, nullptr},
+    {TS_STOPPED, "stopped"},
+    {TS_RUNNING, "running"},
+    {TS_COMPLETED, "completed"},
+});
+```
+
+The `NLOHMANN_JSON_SERIALIZE_ENUM()` macro declares a set of `to_json()` / `from_json()` functions for type `TaskState` while avoiding repetition and boilerplate serilization code.
+
+**Usage:**
+
+```cpp
+// enum to JSON as string
+json j = TS_STOPPED;
+assert(j == "stopped");
+
+// json string to enum
+json j3 = "running";
+assert(j3.get<TaskState>() == TS_RUNNING);
+
+// undefined json value to enum (where the first map entry above is the default)
+json jPi = 3.14;
+assert(jPi.get<TaskState>() == TS_INVALID );
+```
+
+Just as in [Arbitrary Type Conversions](#arbitrary-types-conversions) above,
+- `NLOHMANN_JSON_SERIALIZE_ENUM()` MUST be declared in your enum type's namespace (which can be the global namespace), or the library will not be able to locate it and it will default to integer serialization.
+- It MUST be available (e.g., proper headers must be included) everywhere you use the conversions.
+
+Other Important points:
+- When using `get<ENUM_TYPE>()`, undefined JSON values will default to the first pair specified in your map. Select this default pair carefully.
+- If an enum or JSON value is specified more than once in your map, the first matching occurrence from the top of the map will be returned when converting to or from JSON.
+
+### Binary formats (BSON, CBOR, MessagePack, and UBJSON)
+
+Though JSON is a ubiquitous data format, it is not a very compact format suitable for data exchange, for instance over a network. Hence, the library supports [BSON](http://bsonspec.org) (Binary JSON), [CBOR](http://cbor.io) (Concise Binary Object Representation), [MessagePack](http://msgpack.org), and [UBJSON](http://ubjson.org) (Universal Binary JSON Specification) to efficiently encode JSON values to byte vectors and to decode such vectors.
 
 ```cpp
 // create a JSON value
 json j = R"({"compact": true, "schema": 0})"_json;
+
+// serialize to BSON
+std::vector<std::uint8_t> v_bson = json::to_bson(j);
+
+// 0x1B, 0x00, 0x00, 0x00, 0x08, 0x63, 0x6F, 0x6D, 0x70, 0x61, 0x63, 0x74, 0x00, 0x01, 0x10, 0x73, 0x63, 0x68, 0x65, 0x6D, 0x61, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+
+// roundtrip
+json j_from_bson = json::from_bson(v_bson);
 
 // serialize to CBOR
 std::vector<std::uint8_t> v_cbor = json::to_cbor(j);
@@ -842,8 +988,8 @@ json j_from_ubjson = json::from_ubjson(v_ubjson);
 
 Though it's 2018 already, the support for C++11 is still a bit sparse. Currently, the following compilers are known to work:
 
-- GCC 4.9 - 8.2 (and possibly later)
-- Clang 3.4 - 6.1 (and possibly later)
+- GCC 4.8 - 9.0 (and possibly later)
+- Clang 3.4 - 8.0 (and possibly later)
 - Intel C++ Compiler 17.0.2 (and possibly later)
 - Microsoft Visual C++ 2015 / Build Tools 14.0.25123.0 (and possibly later)
 - Microsoft Visual C++ 2017 / Build Tools 15.5.180.51428 (and possibly later)
@@ -852,7 +998,7 @@ I would be happy to learn about other compilers/versions.
 
 Please note:
 
-- GCC 4.8 does not work because of two bugs ([55817](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55817) and [57824](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=57824)) in the C++11 support. Note there is a [pull request](https://github.com/nlohmann/json/pull/212) to fix some of the issues.
+- GCC 4.8 has a bug [57824](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=57824)): multiline raw strings cannot be the arguments to macros. Don't use multiline raw strings directly in macros with this compiler.
 - Android defaults to using very old compilers and C++ libraries. To fix this, add the following to your `Application.mk`. This will switch to the LLVM C++ library, the Clang compiler, and enable C++11 and other features disabled by default.
 
     ```
@@ -871,6 +1017,7 @@ The following compilers are currently used in continuous integration at [Travis]
 
 | Compiler        | Operating System             | Version String |
 |-----------------|------------------------------|----------------|
+| GCC 4.8.5       | Ubuntu 14.04.5 LTS           | g++-4.8 (Ubuntu 4.8.5-2ubuntu1~14.04.2) 4.8.5 |
 | GCC 4.9.4       | Ubuntu 14.04.1 LTS           | g++-4.9 (Ubuntu 4.9.4-2ubuntu1~14.04.1) 4.9.4 |
 | GCC 5.5.0       | Ubuntu 14.04.1 LTS           | g++-5 (Ubuntu 5.5.0-12ubuntu1~14.04) 5.5.0 20171010 |
 | GCC 6.4.0       | Ubuntu 14.04.1 LTS           | g++-6 (Ubuntu 6.4.0-17ubuntu1~14.04) 6.4.0 20180424 |
@@ -895,6 +1042,7 @@ The following compilers are currently used in continuous integration at [Travis]
 | Clang Xcode 9.1 | OSX 10.12.6 | Apple LLVM version 9.0.0 (clang-900.0.38) |
 | Clang Xcode 9.2 | OSX 10.13.3 | Apple LLVM version 9.1.0 (clang-902.0.39.1) |
 | Clang Xcode 9.3 | OSX 10.13.3 | Apple LLVM version 9.1.0 (clang-902.0.39.2) |
+| Clang Xcode 10.0 | OSX 10.13.3 | Apple LLVM version 10.0.0 (clang-1000.11.45.2) |
 | Visual Studio 14 2015 | Windows Server 2012 R2 (x64) | Microsoft (R) Build Engine version 14.0.25420.1, MSVC 19.0.24215.1 |
 | Visual Studio 2017 | Windows Server 2016 | Microsoft (R) Build Engine version 15.7.180.61344, MSVC 19.14.26433.0 |
 
@@ -932,7 +1080,7 @@ Only if your request would contain confidential information, please [send me an 
 
 I deeply appreciate the help of the following people.
 
-![Contributors](https://raw.githubusercontent.com/nlohmann/json/develop/doc/avatars.png)
+<img src="https://raw.githubusercontent.com/nlohmann/json/develop/doc/avatars.png" align="right">
 
 - [Teemperor](https://github.com/Teemperor) implemented CMake support and lcov integration, realized escape and Unicode handling in the string parser, and fixed the JSON serialization.
 - [elliotgoodrich](https://github.com/elliotgoodrich) fixed an issue with double deletion in the iterator classes.
@@ -1045,7 +1193,7 @@ I deeply appreciate the help of the following people.
 - [Axel Huebl](https://github.com/ax3l) simplified a CMake check and added support for the [Spack package manager](https://spack.io).
 - [Carlos O'Ryan](https://github.com/coryan) fixed a typo.
 - [James Upjohn](https://github.com/jammehcow) fixed a version number in the compilers section.
-- [Chuck Atkins](https://github.com/chuckatkins) adjusted the CMake files to the CMake packaging guidelines
+- [Chuck Atkins](https://github.com/chuckatkins) adjusted the CMake files to the CMake packaging guidelines and provided documentation for the CMake integration.
 - [Jan Schöppach](https://github.com/dns13) fixed a typo.
 - [martin-mfg](https://github.com/martin-mfg) fixed a typo.
 - [Matthias Möller](https://github.com/TinyTinni) removed the dependency from `std::stringstream`.
@@ -1056,6 +1204,28 @@ I deeply appreciate the help of the following people.
 - [grembo](https://github.com/grembo) fixed the test suite and re-enabled several test cases.
 - [Hyeon Kim](https://github.com/simnalamburt) introduced the macro `JSON_INTERNAL_CATCH` to control the exception handling inside the library.
 - [thyu](https://github.com/thyu) fixed a compiler warning.
+- [David Guthrie](https://github.com/LEgregius) fixed a subtle compilation error with Clang 3.4.2.
+- [Dennis Fischer](https://github.com/dennisfischer) allowed to call `find_package` without installing the library.
+- [Hyeon Kim](https://github.com/simnalamburt) fixed an issue with a double macro definition.
+- [Ben Berman](https://github.com/rivertam) made some error messages more understandable.
+- [zakalibit](https://github.com/zakalibit) fixed a compilation problem with the Intel C++ compiler.
+- [mandreyel](https://github.com/mandreyel) fixed a compilation problem.
+- [Kostiantyn Ponomarenko](https://github.com/koponomarenko) added version and license information to the Meson build file.
+- [Henry Schreiner](https://github.com/henryiii) added support for GCC 4.8.
+- [knilch](https://github.com/knilch0r) made sure the test suite does not stall when run in the wrong directory.
+- [Antonio Borondo](https://github.com/antonioborondo) fixed an MSVC 2017 warning.
+- [Dan Gendreau](https://github.com/dgendreau) implemented the `NLOHMANN_JSON_SERIALIZE_ENUM` macro to quickly define a enum/JSON mapping.
+- [efp](https://github.com/efp) added line and column information to parse errors.
+- [julian-becker](https://github.com/julian-becker) added BSON support.
+- [Pratik Chowdhury](https://github.com/pratikpc) added support for structured bindings.
+- [David Avedissian](https://github.com/davedissian) added support for Clang 5.0.1 (PS4 version).
+- [Jonathan Dumaresq](https://github.com/dumarjo) implemented an input adapter to read from `FILE*`.
+- [kjpus](https://github.com/kjpus) fixed a link in the documentation.
+- [Manvendra Singh](https://github.com/manu-chroma) fixed a typo in the documentation.
+- [ziggurat29](https://github.com/ziggurat29) fixed an MSVC warning.
+- [Sylvain Corlay](https://github.com/SylvainCorlay) added code to avoid an issue with MSVC.
+- [mefyl](https://github.com/mefyl) fixed a bug when JSON was parsed from an input stream.
+- [Millian Poquet](https://github.com/mpoquet) allowed to install the library via Meson.
 
 Thanks a lot for helping out! Please [let me know](mailto:mail@nlohmann.me) if I forgot someone.
 
@@ -1070,7 +1240,7 @@ The library itself consists of a single header file licensed under the MIT licen
 - [**Artistic Style**](http://astyle.sourceforge.net) for automatic source code identation
 - [**Catch**](https://github.com/philsquared/Catch) for the unit tests
 - [**Clang**](http://clang.llvm.org) for compilation with code sanitizers
-- [**Cmake**](https://cmake.org) for build automation
+- [**CMake**](https://cmake.org) for build automation
 - [**Codacity**](https://www.codacy.com) for further [code analysis](https://www.codacy.com/app/nlohmann/json)
 - [**Coveralls**](https://coveralls.io) to measure [code coverage](https://coveralls.io/github/nlohmann/json)
 - [**Coverity Scan**](https://scan.coverity.com) for [static analysis](https://scan.coverity.com/projects/nlohmann-json)
