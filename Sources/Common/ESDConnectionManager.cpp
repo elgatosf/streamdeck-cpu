@@ -148,7 +148,7 @@ void ESDConnectionManager::Run()
 		mWebsocket.set_message_handler(websocketpp::lib::bind(&ESDConnectionManager::OnMessage, this, websocketpp::lib::placeholders::_1, websocketpp::lib::placeholders::_2));
 		
 		websocketpp::lib::error_code ec;
-		std::string uri = "ws://localhost:" + std::to_string(mPort);
+		std::string uri = "ws://127.0.0.1:" + std::to_string(mPort);
 		WebsocketClient::connection_ptr connection = mWebsocket.get_connection(uri, ec);
 		if (ec)
 		{
