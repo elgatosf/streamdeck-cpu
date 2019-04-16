@@ -131,6 +131,7 @@
 #define kESDSDKRegisterUUID							"uuid"
 
 #define kESDSDKApplicationInfo						"application"
+#define kESDSDKPluginInfo							"plugin"
 #define kESDSDKDevicesInfo							"devices"
 #define kESDSDKColorsInfo							"colors"
 #define kESDSDKDevicePixelRatio						"devicePixelRatio"
