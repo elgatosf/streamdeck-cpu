@@ -43,6 +43,7 @@
 #define kESDSDKEventDeviceDidDisconnect				"deviceDidDisconnect"
 #define kESDSDKEventApplicationDidLaunch			"applicationDidLaunch"
 #define kESDSDKEventApplicationDidTerminate			"applicationDidTerminate"
+#define kESDSDKEventSystemDidWakeUp					"systemDidWakeUp"
 #define kESDSDKEventTitleParametersDidChange		"titleParametersDidChange"
 #define kESDSDKEventDidReceiveSettings				"didReceiveSettings"
 #define kESDSDKEventDidReceiveGlobalSettings		"didReceiveGlobalSettings"
@@ -98,6 +99,7 @@
 #define kESDSDKDeviceInfoID							"id"
 #define kESDSDKDeviceInfoType						"type"
 #define kESDSDKDeviceInfoSize						"size"
+#define kESDSDKDeviceInfoName						"name"
 
 #define kESDSDKDeviceInfoSizeColumns				"columns"
 #define kESDSDKDeviceInfoSizeRows					"rows"
@@ -164,6 +166,8 @@ typedef int ESDSDKDeviceType;
 enum
 {
 	kESDSDKDeviceType_StreamDeck = 0,
-	kESDSDKDeviceType_StreamDeckMini = 1
+	kESDSDKDeviceType_StreamDeckMini = 1,
+	kESDSDKDeviceType_StreamDeckXL = 2,
+	kESDSDKDeviceType_StreamDeckMobile = 3
 };
 
