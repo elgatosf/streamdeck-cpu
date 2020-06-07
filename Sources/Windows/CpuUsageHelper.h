@@ -12,7 +12,10 @@
 
 #pragma once
 #pragma comment(lib, "Pdh.lib")
-#include "pdh.h"
+
+#include <winsock2.h>
+#include <windows.h>
+#include <pdh.h>
 
 class CpuUsageHelper
 {
