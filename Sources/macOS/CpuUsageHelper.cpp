@@ -12,6 +12,8 @@
 
 #include "CpuUsageHelper.h"
 
+#include <cmath>
+
 CpuUsageHelper::CpuUsageHelper() 
 {
 	int mib[2U] = { CTL_HW, HW_NCPU };

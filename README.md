@@ -1,5 +1,8 @@
+![Continuous Integration](https://github.com/fredemmott/streamdeck-cpu/workflows/Continuous%20Integration/badge.svg)
 
 `CPU` is a sample plugin demonstrating the [Stream Deck SDK](https://developer.elgato.com/documentation/stream-deck/).
+
+This fork demonstrates [FredEmmott/StreamDeckCPPSDK](https://github.com/fredemmott/streamdeck-cpu/), and porting to it.
 
 
 # Description
@@ -15,12 +18,6 @@
 
 
 ![](screenshot.png)
-
-
-# Installation
-
-In the Release folder, you can find the file `com.elgato.cpu.streamDeckPlugin`. If you double-click this file on your machine, Stream Deck will install the plugin.
-
 
 # Source code
 

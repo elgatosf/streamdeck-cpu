@@ -10,8 +10,12 @@
 **/
 //==============================================================================
 
-#include "Common/ESDBasePlugin.h"
+#include <StreamDeckSDK/ESDBasePlugin.h>
+
 #include <mutex>
+#include <set>
+
+using json = nlohmann::json;
 
 class CpuUsageHelper;
 class CallBackTimer;
