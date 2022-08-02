@@ -19,7 +19,7 @@
 	#include "Windows/CpuUsageHelper.h"
 #endif
 
-#include "Common/ESDConnectionManager.h"
+#include <StreamDeckSDK/ESDConnectionManager.h>
 
 class CallBackTimer
 {
