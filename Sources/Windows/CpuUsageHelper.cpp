@@ -15,7 +15,7 @@
 CpuUsageHelper::CpuUsageHelper() 
 {
 	PdhOpenQuery(nullptr, NULL, &mCpuQuery);
-	PdhAddEnglishCounter(mCpuQuery, L"\\Processor(_Total)\\% Processor Time", NULL, &mCpuTotal);
+	PdhAddEnglishCounter(mCpuQuery, L"\\Processor Information(_Total)\\% Processor Utility", NULL, &mCpuTotal);
 	PdhCollectQueryData(mCpuQuery);
 	GetCurrentCPUValue();
 }
