@@ -11,6 +11,7 @@
 //==============================================================================
 
 #include "CpuUsageHelper.h"
+#include <algorithm>
 
 CpuUsageHelper::CpuUsageHelper() 
 {
@@ -26,5 +27,6 @@ int CpuUsageHelper::GetCurrentCPUValue()
 
 	PdhCollectQueryData(mCpuQuery);
 	PdhGetFormattedCounterValue(mCpuTotal, PDH_FMT_LONG, NULL, &counterVal);
-	return (int)counterVal.longValue;
+	int result = std::min((int)counterVal.longValue, 100);
+	return result;
 }
