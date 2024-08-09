@@ -11,7 +11,7 @@
 //==============================================================================
 
 #include "CpuUsageHelper.h"
-#include <algorithm>
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
 CpuUsageHelper::CpuUsageHelper() 
 {
@@ -27,6 +27,6 @@ int CpuUsageHelper::GetCurrentCPUValue()
 
 	PdhCollectQueryData(mCpuQuery);
 	PdhGetFormattedCounterValue(mCpuTotal, PDH_FMT_LONG, NULL, &counterVal);
-	int result = std::min((int)counterVal.longValue, 100);
+	int result = (int)(MIN(counterVal.longValue, (LONG)100));
 	return result;
 }
