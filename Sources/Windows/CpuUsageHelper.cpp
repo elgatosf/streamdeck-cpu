@@ -27,6 +27,5 @@ int CpuUsageHelper::GetCurrentCPUValue()
 
 	PdhCollectQueryData(mCpuQuery);
 	PdhGetFormattedCounterValue(mCpuTotal, PDH_FMT_LONG, NULL, &counterVal);
-	int result = (int)(MIN(counterVal.longValue, (LONG)100));
-	return result;
+	return (int)(MIN(counterVal.longValue, 100L));
 }
