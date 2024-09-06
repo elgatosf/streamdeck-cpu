@@ -11,11 +11,12 @@
 //==============================================================================
 
 #include "CpuUsageHelper.h"
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
 CpuUsageHelper::CpuUsageHelper() 
 {
 	PdhOpenQuery(nullptr, NULL, &mCpuQuery);
-	PdhAddEnglishCounter(mCpuQuery, L"\\Processor(_Total)\\% Processor Time", NULL, &mCpuTotal);
+	PdhAddEnglishCounter(mCpuQuery, L"\\Processor Information(_Total)\\% Processor Utility", NULL, &mCpuTotal);
 	PdhCollectQueryData(mCpuQuery);
 	GetCurrentCPUValue();
 }
@@ -26,5 +27,5 @@ int CpuUsageHelper::GetCurrentCPUValue()
 
 	PdhCollectQueryData(mCpuQuery);
 	PdhGetFormattedCounterValue(mCpuTotal, PDH_FMT_LONG, NULL, &counterVal);
-	return (int)counterVal.longValue;
+	return (int)(MIN(counterVal.longValue, 100L));
 }
