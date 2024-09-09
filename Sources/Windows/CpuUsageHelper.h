@@ -24,6 +24,7 @@ public:
 	~CpuUsageHelper() {};
 	
 	int GetCurrentCPUValue();
+	void OpenSystemMonitor();
 
 private:
 	PDH_HQUERY mCpuQuery;

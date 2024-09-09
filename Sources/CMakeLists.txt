@@ -29,7 +29,7 @@ set(
   main.cpp
 )
 if (APPLE)
-  list(APPEND SOURCES macOS/CpuUsageHelper.cpp)
+  list(APPEND SOURCES macOS/CpuUsageHelper.mm)
 elseif (WIN32)
   list(APPEND SOURCES Windows/CpuUsageHelper.cpp)
 endif()

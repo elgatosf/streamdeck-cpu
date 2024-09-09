@@ -119,7 +119,7 @@ void MyStreamDeckPlugin::KeyDownForAction(const std::string& inAction, const std
 
 void MyStreamDeckPlugin::KeyUpForAction(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)
 {
-	// Nothing to do
+	mCpuUsageHelper->OpenSystemMonitor();
 }
 
 void MyStreamDeckPlugin::WillAppearForAction(const std::string& inAction, const std::string& inContext, const json &inPayload, const std::string& inDeviceID)

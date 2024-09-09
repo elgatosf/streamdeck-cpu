@@ -11,9 +11,10 @@
 //==============================================================================
 
 #include "CpuUsageHelper.h"
+#include <string>
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
-CpuUsageHelper::CpuUsageHelper() 
+CpuUsageHelper::CpuUsageHelper()
 {
 	PdhOpenQuery(nullptr, NULL, &mCpuQuery);
 	PdhAddEnglishCounter(mCpuQuery, L"\\Processor Information(_Total)\\% Processor Utility", NULL, &mCpuTotal);
@@ -28,4 +29,15 @@ int CpuUsageHelper::GetCurrentCPUValue()
 	PdhCollectQueryData(mCpuQuery);
 	PdhGetFormattedCounterValue(mCpuTotal, PDH_FMT_LONG, NULL, &counterVal);
 	return (int)(MIN(counterVal.longValue, 100L));
+}
+
+// Open Windows Task Manager
+void CpuUsageHelper::OpenSystemMonitor()
+{
+	char buffer[MAX_PATH];
+	int length = GetSystemDirectoryA(buffer, MAX_PATH);
+
+	if (length > 0 && length <= MAX_PATH) {
+		ShellExecuteA(NULL, "open", (std::string(buffer) + "\\Taskmgr.exe").c_str(), NULL, NULL, SW_SHOWDEFAULT);
+	}
 }

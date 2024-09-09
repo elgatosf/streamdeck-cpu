@@ -25,6 +25,7 @@ public:
 	~CpuUsageHelper() {};
 	
 	int GetCurrentCPUValue();
+	void OpenSystemMonitor();
 
 private:
 	
