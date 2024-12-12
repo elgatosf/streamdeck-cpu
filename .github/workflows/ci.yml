@@ -1,35 +1,51 @@
 name: Continuous Integration
-on: [push, pull_request]
+
+on:
+  push:
+    branches:
+      - "master"
+
+  pull_request:
+    branches:
+      - "master"
+
 jobs:
   build:
+    strategy:
+      matrix:
+        os: [windows, macos]
+        build-type: [Release, Debug]
+
     name: ${{matrix.os}}/${{matrix.build-type}}
     runs-on: ${{matrix.os}}-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+
       - name: Make build directory
         run: cmake -E make_directory build
+
       - name: Configure
         working-directory: build
         run: |
           cmake ../Sources \
             -DCMAKE_BUILD_TYPE=${{matrix.build-type}}
         shell: bash
+
       - name: Compile
         working-directory: build
         run: cmake --build . --config ${{matrix.build-type}}
+
       - name: Upload binary (Mac)
         if: matrix.os == 'macos'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: cpu-${{matrix.build-type}}
           path: build/cpu
+
       - name: Upload binary (Windows)
         if: matrix.os == 'windows'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: cpu-${{matrix.build-type}}.exe
           path: build/${{matrix.build-type}}/cpu.exe
-    strategy:
-      matrix:
-        os: [windows, macos]
-        build-type: [Release, Debug]
