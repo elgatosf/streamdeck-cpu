@@ -1,33 +1,45 @@
-include(ExternalProject)
+include(FetchContent)
 
-ExternalProject_Add(
-  StreamDeckSDK_build
-  URL https://github.com/fredemmott/StreamDeck-CPPSDK/releases/download/v1.0/StreamDeckSDK-v1.0.zip
-  URL_HASH SHA512=3a2c5e2c0fc7ea4dca6e6a0a36bfe9726bcbbf9248d70bac1542362bcdc395ba26713891082798346a7d17035bba366fae9d6f371c9fcff227ea8d19a23a07c8
-  CMAKE_ARGS
-      -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-      -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-)
-
-ExternalProject_Get_Property(
-  StreamDeckSDK_build
-  INSTALL_DIR
-)
-add_library(StreamDeckSDK INTERFACE)
-add_dependencies(StreamDeckSDK StreamDeckSDK_build)
-target_link_libraries(
+FetchContent_Declare(
   StreamDeckSDK
-  INTERFACE
-  ${INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}StreamDeckSDK${CMAKE_STATIC_LIBRARY_SUFFIX}
+  URL https://github.com/fredemmott/StreamDeck-CPPSDK/releases/download/v3.0.3/StreamDeckSDK-v3.0.3.zip
+  URL_HASH SHA512=b0d1a3e11ba6c0fbffbf875cd608015596e27efdc7839557adfb86183572c6827fccbd693d5f6e7d6af53f2d4e325ea69aa0b74225d85846d9939f65fadfaa7c
 )
-target_include_directories(StreamDeckSDK INTERFACE ${INSTALL_DIR}/include)
-target_compile_definitions(StreamDeckSDK INTERFACE -DASIO_STANDALONE=1)
 
-if (APPLE)
-  find_library(CORE_FOUNDATION_LIBRARY CoreFoundation REQUIRED)
-  target_link_libraries(
-    StreamDeckSDK
-    INTERFACE
-    ${CORE_FOUNDATION_LIBRARY}
+FetchContent_GetProperties(StreamDeckSDK)
+if(NOT streamdecksdk_POPULATED)
+  FetchContent_Populate(StreamDeckSDK)
+  add_subdirectory("${streamdecksdk_SOURCE_DIR}" "${streamdecksdk_BINARY_DIR}" EXCLUDE_FROM_ALL)
+endif()
+
+if(APPLE)
+  set(
+    STREAMDECK_PLUGIN_DIR
+    "$ENV{HOME}/Library/Application Support/com.elgato.StreamDeck/Plugins"
+  )
+elseif(WIN32)
+  string(
+    REPLACE
+    "\\"
+    "/"
+    STREAMDECK_PLUGIN_DIR
+    "$ENV{appdata}/Elgato/StreamDeck/Plugins"
   )
 endif()
+
+set(
+  STREAMDECK_PLUGIN_DIR
+  ${STREAMDECK_PLUGIN_DIR}
+  CACHE PATH "Path to this system's streamdeck plugin directory"
+)
+
+function(set_default_install_dir_to_streamdeck_plugin_dir)
+  if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(
+      CMAKE_INSTALL_PREFIX
+      "${STREAMDECK_PLUGIN_DIR}/${CMAKE_PROJECT_NAME}"
+      CACHE PATH "See cmake documentation"
+      FORCE
+    )
+  endif()
+endfunction()
