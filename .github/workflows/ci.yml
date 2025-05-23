@@ -5,7 +5,7 @@ jobs:
     name: ${{matrix.os}}/${{matrix.build-type}}
     runs-on: ${{matrix.os}}-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Make build directory
         run: cmake -E make_directory build
       - name: Configure
@@ -19,13 +19,13 @@ jobs:
         run: cmake --build . --config ${{matrix.build-type}}
       - name: Upload binary (Mac)
         if: matrix.os == 'macos'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: cpu-${{matrix.build-type}}
           path: build/cpu
       - name: Upload binary (Windows)
         if: matrix.os == 'windows'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: cpu-${{matrix.build-type}}.exe
           path: build/${{matrix.build-type}}/cpu.exe
