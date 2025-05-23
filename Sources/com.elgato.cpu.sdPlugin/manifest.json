@@ -23,7 +23,7 @@
   "Name": "CPU",
   "Icon": "pluginIcon",
   "URL": "https://www.elgato.com/gaming/stream-deck",
-  "Version": "1.4",
+  "Version": "1.4.2",
   "OS": [
     {
         "Platform": "mac",

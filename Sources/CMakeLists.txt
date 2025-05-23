@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(com.elgato.cpu VERSION 1.4)
+project(com.elgato.cpu VERSION 1.4.2)
 
 if (APPLE)
   set(
@@ -8,6 +8,7 @@ if (APPLE)
     "$ENV{HOME}/Library/ApplicationSupport/com.elgato.StreamDeck/Plugins"
   )
   find_library(APPKIT_LIBRARY AppKit)
+  set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
 endif()
 set(
   CMAKE_INSTALL_PREFIX
